@@ -91,17 +91,17 @@ class NativeDialogs {
         });
   }
 
-  static Future<T> displayAlert<T>({
-    @required BuildContext context,
-    Widget title,
-    Widget content,
-    bool isDismissible = true,
-  }) {
+  static Future<T> displayAlert<T>(
+      {@required BuildContext context,
+      Widget title,
+      Widget content,
+      bool isDismissible = true,
+      String actionTitle = "Отмена"}) {
     return NativeDialogs.displayDialog(
         context: context,
         title: title,
         content: content,
-        actions: [NativeDialogsAction(child: Text("Отмена"))]);
+        actions: [NativeDialogsAction(child: Text(actionTitle))]);
   }
 
   static Future<T> displayDialog<T>(
