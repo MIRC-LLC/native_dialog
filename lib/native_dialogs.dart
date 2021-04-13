@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 
 class NativeDialogsAction {
-  Widget child;
-  Widget leading;
-  Function onPressed;
+  Widget? child;
+  Widget? leading;
+  Function? onPressed;
   bool isDefaultAction;
   bool isDestructiveAction;
 
@@ -20,12 +20,12 @@ class NativeDialogsAction {
 }
 
 class NativeDialogs {
-  static Future<T> confirm<T>(
-      {@required BuildContext context,
-      Widget title,
-      Widget content,
-      Function onOk,
-      Function onCancel,
+  static Future<T?> confirm<T>(
+      {required BuildContext context,
+      Widget? title,
+      Widget? content,
+      Function? onOk,
+      Function? onCancel,
       String okText = "Подтвердить",
       String cancelText = "Отмена"}) {
     return NativeDialogs.displayDialog(
@@ -41,10 +41,10 @@ class NativeDialogs {
         ]);
   }
 
-  static Future<T> displaySheet<T>(
-      {@required BuildContext context,
-      String title,
-      String message,
+  static Future<T?> displaySheet<T>(
+      {required BuildContext context,
+      String? title,
+      String? message,
       List<NativeDialogsAction> actions = const []}) {
     if (Platform.isIOS) {
       return showCupertinoModalPopup(
@@ -55,10 +55,10 @@ class NativeDialogs {
               message: message != null ? Text(message) : null,
               actions: actions.map((action) {
                 return CupertinoActionSheetAction(
-                  child: action.child,
+                  child: action.child!,
                   onPressed: () {
                     Navigator.of(context).pop();
-                    action.onPressed();
+                    action.onPressed!();
                   },
                   isDefaultAction: false,
                   isDestructiveAction: true,
@@ -82,7 +82,7 @@ class NativeDialogs {
                 title: action.child,
                 onTap: () {
                   Navigator.of(context).pop();
-                  action.onPressed();
+                  action.onPressed!();
                 },
                 leading: action.leading,
               );
@@ -91,10 +91,10 @@ class NativeDialogs {
         });
   }
 
-  static Future<T> displayAlert<T>(
-      {@required BuildContext context,
-      Widget title,
-      Widget content,
+  static Future<T?> displayAlert<T>(
+      {required BuildContext context,
+      Widget? title,
+      Widget? content,
       bool isDismissible = true,
       String actionTitle = "Отмена"}) {
     return NativeDialogs.displayDialog(
@@ -104,10 +104,10 @@ class NativeDialogs {
         actions: [NativeDialogsAction(child: Text(actionTitle))]);
   }
 
-  static Future<T> displayDialog<T>(
-      {@required BuildContext context,
-      Widget title,
-      Widget content,
+  static Future<T?> displayDialog<T>(
+      {required BuildContext context,
+      Widget? title,
+      Widget? content,
       bool isDismissible = true,
       List<NativeDialogsAction> actions = const []}) {
     Widget dialog;
@@ -116,7 +116,7 @@ class NativeDialogs {
       Navigator.of(context).pop();
 
       if (action.onPressed != null) {
-        action.onPressed();
+        action.onPressed!();
       }
     }
 
@@ -126,7 +126,7 @@ class NativeDialogs {
         content: content,
         actions: actions
             .map((action) => CupertinoDialogAction(
-                  child: action.child,
+                  child: action.child!,
                   onPressed: () {
                     onPressed(action);
                   },
@@ -140,11 +140,11 @@ class NativeDialogs {
         title: title,
         content: content,
         actions: actions
-            .map((action) => FlatButton(
+            .map((action) => TextButton(
                 onPressed: () {
                   onPressed(action);
                 },
-                child: action.child))
+                child: action.child!))
             .toList(),
       );
     }
